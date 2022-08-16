@@ -4,15 +4,15 @@
       <h3>{{isCollapse ? '后台' : '后台管理系统'}}</h3>
       <el-menu-item @click="clickMenu(item)" v-for="item in noChildren" :index="item.path" :key="item.path">
         <i :class="'el-icon-' + item.icon"></i>
-        <span slot="title">{{item.lable}}</span>
+        <span slot="title">{{item.label}}</span>
       </el-menu-item>
       <el-submenu v-for="item in hasChildren" :index="item.path + ''" :key="item.path">
         <template slot="title">
           <i :class="'el-icon-' + item.icon"></i>
-          <span slot="title">{{item.lable}}</span>
+          <span slot="title">{{item.label}}</span>
         </template>
         <el-menu-item-group v-for="(subItem, subindex) in item.children" :key="subItem.path">
-          <el-menu-item :index="subindex + ''">{{subItem.lable}}</el-menu-item>
+          <el-menu-item @click="clickMenu(subItem)" :index="subindex + ''">{{subItem.label}}</el-menu-item>
           <!-- <el-menu-item index="1-2">选项2</el-menu-item> -->
         </el-menu-item-group>
       </el-submenu>
@@ -27,47 +27,47 @@ export default {
     return {
       // isCollapse: true,
       menu: [
-        {
-          path: "/",
-          name: "home",
-          lable: "首页",
-          icon: "s-home",
-          url: "Home/Home"
-        },
-        {
-          path: "/mall",
-          name: "mall",
-          lable: "商品管理",
-          icon: "video-play",
-          url: "MallManage/MallManage"
-        },
-        {
-          path: "/user",
-          name: "user",
-          lable: "用户管理",
-          icon: "user",
-          url: "UserManage/UserManage"
-        },
-        {
-          lable: "其他",
-          icon: "location",
-          children: [
-            {
-              path: "/page1",
-              name: "page1",
-              lable: "页面1",
-              icon: "setting",
-              url: "Other/PageOne"
-            },
-            {
-              path: "/page2",
-              name: "page2",
-              lable: "页面2",
-              icon: "setting",
-              url: "Other/PageTwo"
-            }
-          ]
-        }
+        // {
+        //   path: "/",
+        //   name: "home",
+        //   label: "首页",
+        //   icon: "s-home",
+        //   url: "Home/Home"
+        // },
+        // {
+        //   path: "/mall",
+        //   name: "mall",
+        //   label: "商品管理",
+        //   icon: "video-play",
+        //   url: "MallManage/MallManage"
+        // },
+        // {
+        //   path: "/user",
+        //   name: "user",
+        //   label: "用户管理",
+        //   icon: "user",
+        //   url: "UserManage/UserManage"
+        // },
+        // {
+        //   label: "其他",
+        //   icon: "location",
+        //   children: [
+        //     {
+        //       path: "/page1",
+        //       name: "page1",
+        //       label: "页面1",
+        //       icon: "setting",
+        //       url: "Other/PageOne"
+        //     },
+        //     {
+        //       path: "/page2",
+        //       name: "page2",
+        //       label: "页面2",
+        //       icon: "setting",
+        //       url: "Other/PageTwo"
+        //     }
+        //   ]
+        // }
       ]
     }
   },
@@ -82,17 +82,21 @@ export default {
       this.$router.push({
         name: item.name
       })
+      this.$store.commit("selectMenu", item)
     }
   },
   computed: {
     noChildren() {
-      return this.menu.filter(item => !item.children)
+      return this.asyncMenu.filter(item => !item.children)
     },
     hasChildren() {
-      return this.menu.filter(item => item.children)
+      return this.asyncMenu.filter(item => item.children)
     },
     isCollapse() {
       return this.$store.state.tab.isCollapse
+    },
+    asyncMenu() {
+      return this.$store.state.tab.menu
     }
   }
 }
