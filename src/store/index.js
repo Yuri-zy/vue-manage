@@ -11,6 +11,10 @@ const store = new Vuex.Store({
     modules: {
         tab,
         user
+    },
+    state: {
+    },
+    mutations: {
     }
 })
 

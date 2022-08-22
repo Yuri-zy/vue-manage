@@ -13,7 +13,7 @@ export default {
             }
         ],
         currentMenu: null,
-        menu: []
+        menu: [],
     },
     mutations: {
         isCollapse(state) {
